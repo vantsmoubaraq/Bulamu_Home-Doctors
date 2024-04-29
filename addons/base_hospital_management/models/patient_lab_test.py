@@ -20,6 +20,7 @@
 #
 ################################################################################
 from odoo import api, fields, models
+from datetime import datetime, timedelta
 
 
 class PatientLabTest(models.Model):
@@ -98,6 +99,29 @@ class PatientLabTest(models.Model):
     inpatient_id = fields.Many2one('hospital.inpatient',
                                    string='Inpatient',
                                    help='Choose the inpatient')
+    right_eye = fields.Char(string="Right Eye")
+    left_eye = fields.Char(string="Left Eye")
+    right_ear = fields.Char(string="Right Ear")
+    left_ear = fields.Char(string="Left Ear")
+    right_leg = fields.Char(string="Right Leg")
+    left_leg = fields.Char(string="Left Leg")
+    right_arm = fields.Char(string="Right Arm")
+    left_arm = fields.Char(string="Left Arm")
+    blood_pressure = fields.Char(string="Blood Pressure")
+    height = fields.Char(string="Height")
+    weight = fields.Char(string="weight")
+    passport_number = fields.Char(string="Passport Number")
+    nationality = fields.Char(string="Nationality")
+    expiry_date = fields.Char(string="Expiry date", default=lambda self: (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d'))
+    pulse = fields.Char(string="Pulse")
+    agency = fields.Char(string="Recruiting Agency")
+    comments= fields.Char(string="comments")
+    issue_date = fields.Date(string="Issue Date", default=fields.Date.today)
+    invoice_order_id = fields.Many2one('account.move',
+                                    string='Invoice ',
+                                    help='Invoice for the lab_test')
+
+
 
     @api.depends('test_id')
     def _compute_medicine_ids(self):
@@ -224,11 +248,11 @@ class PatientLabTest(models.Model):
             })
             data.sold = True
             data.order = sale_order.id
-        invoice_id = self.env['account.move'].sudo().search(
+        """invoice_id = self.env['account.move'].sudo().search(
             [('ref', '=', data.test_id.name)
-             ], limit=1)
-        if not invoice_id:
-            invoice_id = self.env['account.move'].sudo().create({
+             ], limit=1)"""
+        #if not invoice_id:
+        invoice_id = self.env['account.move'].sudo().create({
                 'move_type': 'out_invoice',
                 'partner_id': partner_id,
                 'invoice_date': fields.Date.today(),
@@ -249,6 +273,8 @@ class PatientLabTest(models.Model):
             })
         data.invoiced = True
         data.invoice_id = invoice_id.id
+        self.invoice_id = data.invoice_id
+        return self.invoice_id
 
     def action_test_end(self):
         """Button action for test end"""
@@ -264,14 +290,26 @@ class PatientLabTest(models.Model):
 
     def action_view_invoice(self):
         """Method for viewing invoice from the smart button"""
+        print(self.invoice_id.read())
         return {
             'name': 'Invoice',
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
-            'view_mode': 'tree,form',
+            'view_mode': 'form',
             "context": {"create": False, 'default_move_type': 'out_invoice'},
-            'domain': ['|', (
-                'ref', '=', self.name), ('payment_reference', '=', self.name)]
+            #'domain': ['|', (
+            #   'ref', '=', self.patient_id.name), ('payment_reference', '=', self.patient_id.name)],
+            'res_id': self.invoice_id.id
+        }
+    
+    def new_lab_test(self):
+        """Displays all lab tests"""
+        return {
+            "name": "new lab tests",
+            "view_mode": "form",
+            "res_model": "lab.test.line",
+            "type": 'ir.actions.act_window',
+            "context": {'create': True, 'default_patient_id': self.patient_id.id},
         }
 
     def action_view_sale_order(self):

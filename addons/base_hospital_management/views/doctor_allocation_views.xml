@@ -88,7 +88,7 @@
             </p>
         </field>
     </record>
-    <menuitem id="doctor_allocation_menu" name="Allocation"
+    <!--<menuitem id="doctor_allocation_menu" name="Allocation"
               parent="appointment_menu_doctor"
-              action="doctor_allocation_action" sequence="5"/>
+              action="doctor_allocation_action" sequence="5"/>-->
 </odoo>

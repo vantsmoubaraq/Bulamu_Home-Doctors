@@ -66,11 +66,11 @@
         <field name="res_model">doctor.slot</field>
         <field name="view_mode">calendar,list,form</field>
     </record>
-    <!--    Doctor slot menu-->
+    <!--    Doctor slot menu
     <menuitem id="doctor_slot_menu"
               name="Doctor Slot"
               parent="hospital_menu_appointment"
               action="doctor_slot_action"
               sequence="3">
-    </menuitem>
+    </menuitem>-->
 </odoo>

@@ -265,9 +265,9 @@
             </p>
         </field>
     </record>
-    <!--    Inpatient menu-->
+    <!--    Inpatient menu
     <menuitem id="hospital_inpatient_menu" name="Inpatient"
               parent="appointment_menu_patient"
               action="hospital_inpatient_action"
-              sequence="8"/>
+              sequence="8"/>-->
 </odoo>

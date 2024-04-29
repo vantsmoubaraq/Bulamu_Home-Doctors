@@ -35,7 +35,7 @@ class LabMedicineLine(models.Model):
     medicine_id = fields.Many2one('product.template',
                                   domain="['|', ('medicine_ok', '=', True),"
                                          "('vaccine_ok', '=', True)"
-                                         "]", required=True, string='Medicine',
+                                         "]", required=True, string='Supplies',
                                   help='Medicine for the lab test')
     quantity = fields.Integer(string='Quantity', default=1,
                               help='Quantity of medicine')

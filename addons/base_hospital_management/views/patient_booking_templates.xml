@@ -38,7 +38,7 @@
                                            id="booking_date" name="date" t-attf-value="{{date}}"
                                            required="True"/>
                                 </div>
-                                <div class="mb-3 col-3">
+                                <!--<div class="mb-3 col-3">
                                     <label for="qty"
                                            class="form-label">Department
                                     </label>
@@ -62,7 +62,7 @@
                                             required="True"
                                             class="form-control link-style">
                                     </select>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-8">

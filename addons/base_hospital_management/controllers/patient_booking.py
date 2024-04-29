@@ -47,19 +47,18 @@ class PatientBooking(http.Controller):
             request.env.user.partner_id.sudo().write(
                 {'patient_seq': request.env['ir.sequence'].sudo().next_by_code(
                     'patient.sequence')}) or 'New'
-        op = request.env['hospital.outpatient'].sudo().create({
-            'patient_id': request.env.user.partner_id.id,
-            'doctor_id': int(kw.get("doctor-name")),
-            'op_date': kw.get("date"),
-            'reason': kw.get("reason")
+        op = request.env['res.partner'].sudo().create({
+            'name': request.env.user.partner_id.name,
+            #'op_date': kw.get("date"),
+            #'reason': kw.get("reason")
         })
-        op.sudo().action_confirm()
+        #op.sudo().action_confirm()
         return request.redirect('/my/home')
 
-    @http.route('/patient_booking/get_doctors', type='json', auth="public",
+    """@http.route('/patient_booking/get_doctors', type='json', auth="public",
                 website=True)
     def update_doctors(self, **kw):
-        """Method for fetching doctor allocation for the selected date"""
+        Method for fetching doctor allocation for the selected date
         domain = [('date', '=', kw.get('selected_date'))]
         departments = []
         doctors = []
@@ -75,4 +74,4 @@ class PatientBooking(http.Controller):
                         not in departments):
                     departments.append({'id': rec.department_id.id,
                                         'name': rec.department_id.name})
-        return {'doctors': doctors, 'departments': departments}
+        return {'doctors': doctors, 'departments': departments}"""

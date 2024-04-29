@@ -80,28 +80,7 @@ class DoctorAllocation(models.Model):
          ('cancel', 'Cancelled')],
         default='draft', string='State', help='State of Doctor allocation')
 
-    @api.model
-    def create(self, vals):
-        """Method for creating name"""
-        work_from_hr = int(vals['work_from'])
-        work_from_min = int((vals['work_from'] - work_from_hr) * 60)
-        work_from = "{:02d}:{:02d}".format(work_from_hr, work_from_min)
-        work_to_hr = int(vals['work_to'])
-        work_to_min = int((vals['work_to'] - work_to_hr) * 60)
-        work_to = "{:02d}:{:02d}".format(work_to_hr, work_to_min)
-        doctor_group = self.env.ref(
-            'base_hospital_management.base_hospital_management_group_doctor')
-        if doctor_group in self.env.user.groups_id:
-            default_doctor_id = self.env['hr.employee'].sudo().search(
-                [('user_id', '=', self.env.user.id)], limit=1)
-            if default_doctor_id:
-                vals[
-                    'name'] = (default_doctor_id.name + ': ' + work_from + '-'
-                               + work_to)
-        else:
-            vals['name'] = self.env['hr.employee'].sudo().browse(
-                vals['doctor_id']).name + ': ' + work_from + '-' + work_to
-        return super().create(vals)
+    
 
     @api.onchange('work_from', 'work_to')
     def _onchange_work_from(self):
@@ -136,7 +115,7 @@ class DoctorAllocation(models.Model):
 
     @api.constrains('work_from', 'work_to', 'date')
     def _check_overlap(self):
-        """Method for checking overlapping"""
+        """Method for checking overlapping
         for allocation in self:
             if allocation.work_from >= allocation.work_to:
                 raise ValidationError("Work From must be less than Work To.")
@@ -153,11 +132,12 @@ class DoctorAllocation(models.Model):
             if overlapping_allocations:
                 raise ValidationError(
                     "Overlap detected with another doctor allocation on the "
-                    "same date.")
+                    "same date.")"""
+        pass
 
     @api.depends('work_from', 'work_to', 'time_avg')
     def _compute_patient_limit(self):
-        """Method for computing patient limit"""
+        """Method for computing patient limit
         for record in self:
             if (record.work_from and record.work_to and record.time_avg
                     and record.time_avg > 0):
@@ -169,7 +149,8 @@ class DoctorAllocation(models.Model):
                 else:
                     record.patient_limit = patient_slots
             else:
-                record.patient_limit = 0
+                record.patient_limit = 0"""
+        pass
 
     @api.depends('op_ids')
     def _compute_patient_count(self):
@@ -179,9 +160,10 @@ class DoctorAllocation(models.Model):
 
     @api.depends('op_ids', 'patient_count', 'patient_limit')
     def _compute_slot_remaining(self):
-        """Method for computing slot remaining"""
+        """Method for computing slot remaining
         for rec in self:
-            rec.slot_remaining = rec.patient_limit - rec.patient_count
+            rec.slot_remaining = rec.patient_limit - rec.patient_count"""
+        pass
 
     def action_get_patient_booking(self):
         """Returns form view of bed"""

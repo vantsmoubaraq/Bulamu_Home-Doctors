@@ -37,6 +37,7 @@ class ResPartner(models.Model):
 
     date_of_birth = fields.Date(string='Date of Birth',
                                 help='Date of birth of the patient')
+    age = fields.Integer(string='Age in Years', compute='_compute_age', store=True)
     gender = fields.Selection(selection=[
         ('male', 'Male'), ('female', 'Female')
     ], string='Gender', help='Gender of the patient')
@@ -54,7 +55,7 @@ class ResPartner(models.Model):
                               help='Sequence number of the patient', copy=False,
                               readonly=True, index=True,
                               default=lambda self: 'New')
-    attachment = fields.Binary()
+    attachment = fields.Many2many('ir.attachment', string='Attachments')
     notes = fields.Html(string='Note', help='Notes regarding the notes',
                         sanitize_style=True)
     patient_profession = fields.Char(string="Profession",
@@ -308,8 +309,7 @@ class ResPartner(models.Model):
     def create(self, vals):
         """Inherits create function for sequence generation"""
         if vals.get('patient_seq', 'New') == 'New':
-            vals['patient_seq'] = self.env['ir.sequence'].next_by_code(
-                'patient.sequence') or 'New'
+            vals['patient_seq'] = self.env["ir.sequence"].next_by_code("patient.sequence")
         return super().create(vals)
 
     def action_view_invoice(self):
@@ -320,9 +320,53 @@ class ResPartner(models.Model):
             'view_mode': 'tree,form',
             'res_model': 'account.move',
             'type': 'ir.actions.act_window',
-            'domain': [('partner_id', '=', self.id)],
-            'context': "{'create':False}"
+            'domain': [('partner_id', '=', self.id), ('move_type', '=', 'out_invoice')],
+            'context': "{'create':False, 'view_type': 'form'}",
         }
+    
+    def create_invoice(self):
+        # Assuming you have the necessary details for creating the invoice
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.order',
+            'view_mode': 'form',
+            'target': 'current',
+            "context": {'create': True, 'default_partner_id': self.id},
+        }
+    
+    def prescription_order_action(self):
+        """Displays prescription orders"""
+        self.ensure_one()
+        return {
+            "name": "Prescription Orders",
+            "view_mode": "tree,form",
+            "res_model": "prescription.orders",
+            "type": 'ir.actions.act_window',
+            'domain': [('patient_id', '=', self.id)], 
+            "context": {'create': True, 'default_patient_id': self.id},
+        }
+    
+    def create_lab_test(self):
+        """Displays all lab tests"""
+        return {
+            "name": "lab tests",
+            "view_mode": "tree,form",
+            "res_model": "patient.lab.test",
+            "type": 'ir.actions.act_window',
+            'domain': [('patient_id', '=', self.id)], 
+            "context": {'create': False},
+        }
+    
+    @api.depends('date_of_birth')
+    def _compute_age(self):
+        today = datetime.today().date()
+        for partner in self:
+            if partner.date_of_birth:
+                dob = fields.Date.from_string(partner.date_of_birth)
+                age = relativedelta(today, dob).years
+                partner.age = age
+            else:
+                partner.age = 0
 
     def fetch_view_id(self):
         """Returns the view id of patient"""
@@ -333,15 +377,9 @@ class ResPartner(models.Model):
         """Returns the patient name"""
         result = []
         for rec in self:
-            result.append((rec.id, f'{rec.patient_seq} - {rec.name}'))
+            result.append((rec.id, rec.name))
         return result
 
-    def alive_status(self):
-        """Function for setting the value of is_alive field"""
-        if self.is_alive == 'alive':
-            self.is_alive = 'dead'
-        else:
-            self.is_alive = 'alive'
 
     def action_schedule(self):
         """Returns form view of hospital appointment wizard"""
@@ -537,3 +575,10 @@ class ResPartner(models.Model):
         """Method for returning patient data"""
         return self.sudo().search_read(
             [('patient_seq', 'not in', ['New', 'Employee', 'User'])])
+
+def open_account_move_view(self):
+    return {
+        'type': 'ir.actions.act_url',
+        'url': 'localhost:8070/web#action=753&model=account.move&view_type=list&cids=1&menu_id=544',
+        'target': 'self',
+    }

@@ -53,10 +53,17 @@
         </field>
     </record>
     <!--    Medicine Menu-->
-    <menuitem id="product_template_menu_medicine" name="Medicine"
-              sequence="1"
-              parent="hospital_menu_configuration"
+    <menuitem id="product_template_menu_medicine" name="Pharmacy"
+              sequence="2"
+              parent="hospital_menu_root"/>
+    <menuitem id="product_template_menu_medicine_2" name="Pharmacy"
+              sequence="0"
+              parent="product_template_menu_medicine"
               action="product_template_action_medicine"/>
+     <menuitem id="product_template_menu_deliver" name="Drug Hand Outs"
+              sequence="1"
+              parent="product_template_menu_medicine"
+              action="stock.action_picking_tree_ready"/>
     <!--    Vaccine Menu-->
     <menuitem id="product_template_menu_vaccine" name="Vaccine" sequence="2"
               parent="hospital_menu_configuration"

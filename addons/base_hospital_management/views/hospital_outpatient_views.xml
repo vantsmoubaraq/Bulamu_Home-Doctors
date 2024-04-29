@@ -101,7 +101,7 @@
                         </group>
                         <group>
                             <field name="doctor_id"
-                                   options="{'no_create': True, 'no_edit': True}"
+                                   options="{'no_create': False, 'no_edit': False}"
                                    attrs="{'readonly': [('state', 'in', ('invoice','cancel'))]}"/>
                             <field name="slot" states="op,inpatient,invoice"
                                    attrs="{'readonly': [('state', 'in', ('invoice','cancel'))]}"  widget="float_time"/>
@@ -158,9 +158,9 @@
             </p>
         </field>
     </record>
-    <!--    Out patients menu-->
+    <!--    Out patients menu
     <menuitem id="hospital_outpatient_menu" name="Outpatient"
               sequence="2"
               parent="appointment_menu_patient"
-              action="hospital_outpatient_action"/>
+              action="hospital_outpatient_action"/>-->
 </odoo>

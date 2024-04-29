@@ -84,7 +84,7 @@
         </field>
     </record>
     <!--    Vaccination menu-->
-    <menuitem id="hospital_vaccination_menu" name="Vaccination" sequence="25"
+    <!--<menuitem id="hospital_vaccination_menu" name="Vaccination" sequence="25"
               parent="appointment_menu_patient"
-              action="hospital_vaccination_action"/>
+              action="hospital_vaccination_action"/>-->
 </odoo>

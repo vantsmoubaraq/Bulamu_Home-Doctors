@@ -64,10 +64,10 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_schedule" string="Add Appointment"
+                    <button name="create_lab_test" string="Lab Tests"
                             type="object"
                             groups="base_hospital_management.base_hospital_management_group_manager,base_hospital_management.base_hospital_management_group_receptionist"
-                            class="oe_highlight"/>
+                            class="oe_highlight"  attrs="{'invisible': [('name','=', False)]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -75,47 +75,39 @@
                                 class="oe_stat_button"
                                 attrs="{'invisible': [('name','=', False)]}"
                                 icon="fa-pencil-square-o"
-                                string="Invoice"/>
-                        <button name="action_view_invoice" type="object"
+                                string="Invoices"/>
+                        <button name="prescription_order_action" type="object"
                                 class="oe_stat_button"
                                 attrs="{'invisible': [('name','=', False)]}"
                                 icon="fa-heartbeat"
                                 string="Prescriptions"/>
-                        <!-- <button class="oe_stat_button" type="object"
-                                name="alive_status"
-                                attrs="{'invisible': ['|',('is_alive', '=',
-                                'dead'),('name','=', False)]}"
-                                icon="fa-check">
-                            <span class="o_stat_text text-success">ALIVE</span>
-                        </button>
-                       <button class="oe_stat_button" type="object"
-                                name="alive_status"
-                                attrs="{'invisible': [('is_alive', '=',
-                                'alive')]}"
-                                icon="fa-times-circle">
-                            <span class="o_stat_text text-danger">EXPIRED</span>
-                        </button>-->
-                        <field name="attachment"/>
-
+                        <button name="create_invoice" type="object"
+                                class="oe_stat_button"
+                                attrs="{'invisible': [('name','=', False)]}"
+                                icon="fa-pencil-square-o"
+                                string="Sales"
+                                style="padding: 5px 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff; color: #333; cursor: pointer;"/>
+                                <field name="attachment"  widget="many2many_binary"  attrs="{'invisible': [('name','=', False)]}"/>
                     </div>
                     <field name="image_1920" widget="image" class="oe_avatar"/>
-                    <!--<div class="oe_title">
+                    <div class="oe_title">
                         <h1 class="d-flex">
-                            <field name="patient_seq" placeholder="Patient No."
+                            <field name="name" placeholder="Name"
                                    required="True"/>
                         </h1>
-                    </div>-->
+                    </div>
                     <group>
                         <group>
-                            <field name="name"
+                            <!--<field name="name"
                                    context="{'res_partner_search_mode':
                                     'customer',
                                     'show_address': 1, 'show_email':1}"
-                                   options="{&quot;always_reload&quot;: True}"/>
+                                   options="{&quot;always_reload&quot;: True}"/>-->
                             <field name="date_of_birth"/>
+                            <field name="age"/>
                             <field name="phone"/>
+                            <field name="secondary_phone_number" string="Mobile"/>
                             <field name="email"/>
-                            <field name="secondary_phone_number"/>
                         </group>
                         <group>
                             <field name="gender"/>
@@ -131,34 +123,18 @@
                                 <group>
                                     <span class="o_form_label o_td_label"
                                           name="address_name">
-                                        <field name="type" class="fw-bold"/>
                                         <b>Address</b>
                                     </span>
                                     <div class="o_address_format">
                                         <field name="street"
-                                               placeholder="Street..."
                                                class="o_address_street"/>
-                                        <field name="street2"
-                                               placeholder="Street 2..."
-                                               class="o_address_street"/>
-                                        <field name="city" placeholder="City"
-                                               class="o_address_city"/>
-                                        <field name="state_id"
-                                               class="o_address_state"
-                                               placeholder="State"
-                                               options="{'no_open': True, 'no_quick_create': True}"
-                                               context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
-                                        <field name="zip" placeholder="ZIP"
-                                               class="o_address_zip"/>
-                                        <div name="partner_address_country"
-                                             class="d-flex justify-content-between">
-                                            <field name="country_id"
-                                                   placeholder="Country"
-                                                   class="o_address_country"
-                                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
-                                        </div>
                                     </div>
                                 </group>
+                            </group>
+                            <group>
+                            <group>
+                                <field name="occupation"/>
+                            </group>
                             </group>
                         </page>
                         <page string="Clinical Notes">
@@ -292,43 +268,6 @@
                                 <field name="notes"/>
                             </notebook>
                         </page>
-                        <!--<page name="medicine" string="Medical"
-                              groups="base_hospital_management.base_hospital_management_group_lab_assistant, base_hospital_management.base_hospital_management_group_pharmacist,base_hospital_management.base_hospital_management_group_nurse,base_hospital_management.base_hospital_management_group_receptionist,base_hospital_management.base_hospital_management_group_manager">
-                            <notebook>
-				    <page string="Medicine">
-					<field name="prescription_ids">
-                                        <tree editable="bottom" create="1">
-                                            <field name="medicine_id"/>
-                                            <field name="quantity"/>
-                                            <field name="no_intakes"/>
-                                            <field name="time"/>
-                                            <field name="note"/>
-				    </tree>
-				    </field>
-                                </page>
-                                <page string="Lab Tests">
-                                    <field name="lab_test_ids">
-                                        <tree editable="bottom" create="1">
-                                            <field name="test_id"/>
-                                            <field name="date"/>
-                                            <field name="state"/>
-                                        </tree>
-                                    </field>
-                                </page>
-                                <page string="Vaccine">
-                                    <field name="hospital_vaccination_ids">
-                                        <tree editable="bottom" create="1">
-                                            <field name="patient_id"
-                                                   widget="selection"/>
-                                            <field name="vaccine_product_id"/>
-                                            <field name="vaccine_price"/>
-                                            <field name="vaccine_date"/>
-                                            <field name="dose"/>
-                                        </tree>
-                                    </field>
-                                </page>
-                            </notebook>
-                        </page>-->
                         <page name="social" string="Socioeconomic">
                             <group>
                                 <group string="General">
@@ -336,7 +275,6 @@
                                     <field name="education_level"
                                            string="Education Level"/>
                                     <field name="house_level"/>
-                                    <field name="occupation"/>
                                     <field name="work_home"/>
                                     <field name="hours_outside"/>
                                     <field name="hostile"/>
@@ -430,7 +368,7 @@
         (0, 0,{'view_mode': 'tree', 'view_id': ref('res_partner_view_tree')}),
         (0, 0,{'view_mode': 'form', 'view_id': ref('res_partner_view_form')})]"/>
         <field name="domain">[('patient_seq','not in',['New', 'Employee',
-            'User'])]
+            'User', 'Supplier']), ('supplier_invoice_count', '=', False), ("is_company", "=", False)]
         </field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -440,7 +378,7 @@
     </record>
     <!--    Patient menu-->
     <menuitem id="res_partner_menu"
-              name="Patient"
+              name="Patients"
               parent="hospital_menu_root"
               action="res_partner_action"
               sequence="1"/>

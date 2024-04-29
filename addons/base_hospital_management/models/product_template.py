@@ -61,3 +61,12 @@ class ProductTemplate(models.Model):
             'medicine': vaccines,
         }
         return values
+    
+    def action_deliver_drug(self):
+        """Deliver Drug to Patient"""
+        return {
+            "name": "drug deliveries",
+            "view_mode": "tree,form",
+            "res_model": "stock.picking",
+            "type": 'ir.actions.act_window',
+        }

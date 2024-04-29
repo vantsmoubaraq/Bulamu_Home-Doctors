@@ -30,7 +30,7 @@ class PrescriptionLine(models.Model):
 
     prescription_id = fields.Many2one('hospital.prescription',
                                       string='Prescription',
-                                      help='Name of the prescription')
+                                      help='Name of the prescription', readonly=True,  invisible=True)
     medicine_id = fields.Many2one('product.template', domain=[
         '|', ('medicine_ok', '=', True), ('vaccine_ok', '=', True)],
                                   string='Medicine', required=True,
@@ -63,3 +63,4 @@ class PrescriptionLine(models.Model):
                                      help='The outpatient corresponds to the '
                                           'prescription line',
                                      related='outpatient_id.patient_id')
+   

@@ -76,17 +76,17 @@
         <field name="res_model">inpatient.surgery</field>
         <field name="view_mode">calendar,list,form</field>
     </record>
-    <!--    Doctor menu-->
+    <!--    Doctor menu
     <menuitem id="appointment_menu_doctor"
               name="Doctor"
               parent="hospital_menu_appointment"
               sequence="8">
-    </menuitem>
-    <!--    Doctor slot menu-->
+    </menuitem>-->
+    <!--    Doctor slot menu
     <menuitem id="inpatient_surgery_menu"
               name="Surgery"
               parent="appointment_menu_doctor"
               action="inpatient_surgery_action"
               sequence="10">
-    </menuitem>
+    </menuitem>-->
 </odoo>

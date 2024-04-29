@@ -43,10 +43,7 @@ class HospitalOutpatient(models.Model):
     doctor_id = fields.Many2one('doctor.allocation',
                                 string='Doctor',
                                 help='Select the doctor',
-                                required=True,
-                                domain=[('slot_remaining', '>', 0),
-                                        ('date', '=', fields.date.today()),
-                                        ('state', '=', 'confirm')])
+                                required=False,)
     op_date = fields.Date(default=fields.date.today(), string='Date',
                           help='Date of OP')
     reason = fields.Text(string='Reason', help='Reason for visiting hospital')
