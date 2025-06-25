@@ -71,8 +71,5 @@
         </field>
     </record>
     <!--  Hospital Building menu-->
-    <menuitem id="hospital_building_menu" name="Block"
-              parent="hospital_menu_infrastructure"
-              action="hospital_building_action"
-              sequence="2"/>
+    
 </odoo>

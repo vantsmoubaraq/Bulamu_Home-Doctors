@@ -22,3 +22,4 @@ from . import res_country_group
 from . import res_currency
 from . import res_partner
 from . import uom_uom
+from . import expiry

@@ -61,3 +61,4 @@ from . import pres_lines
 from . import register
 from . import stock_picking
 from . import appointments
+from . import rop

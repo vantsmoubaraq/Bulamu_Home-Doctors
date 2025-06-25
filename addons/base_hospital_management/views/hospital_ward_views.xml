@@ -62,8 +62,5 @@
         </field>
     </record>
     <!--    Ward menu-->
-    <menuitem id="hospital_ward_menu" name="Ward"
-              parent="hospital_menu_infrastructure"
-              action="hospital_ward_action"
-              sequence="4"/>
+    
 </odoo>

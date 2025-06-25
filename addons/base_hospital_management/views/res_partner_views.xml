@@ -114,6 +114,8 @@
                             <field name="marital_status"/>
                             <field name="is_alive" widget="radio" invisible="1"
                                    options="{'horizontal': true}"/>
+                            <!--<field name="gestation_age"/>
+                            <field name="birth_weight"/>-->
                         </group>
                     </group>
                     <notebook>
@@ -140,6 +142,107 @@
                         <page string="Clinical Notes">
                             <field name="notes"/>
                         </page>
+                        <!-- <page string="ROP Evaluations">
+                            <field name="rop">
+                                <tree>
+                                    <field name="rop_no"/>
+                                    <field name="patient_id"/>
+                                    <field name="date"/>
+                                    <field name="chronological_age"/>
+                                    
+                                </tree>
+                                <form>
+                                    <header>
+                                        <button name="generate_report" string="Print" type="object" class="btn-primary"/>
+                                    </header>
+                                    <group>
+                                        <group>
+                                            <field name="patient_id"/>
+                                            <field name="date"/>
+                                            <field name="birth_weight"/>
+                                            <field name="gestation_age"/>
+                                        </group>
+                                        <group>
+                                            <field name="chronological_age"/>
+                                            <field name="most_recent_weight"/>
+                                            <field name="pma"/>
+                                            <field name="nicu"/>
+                                        </group>
+                                    </group>
+                                    <notebook>
+                                        <page string="Clinical History">
+                                            <div>
+                                                <p>As of this Exam, has patient ever?</p>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="blood_transfusion"/>
+                                                    <field name="cpap"/>
+                                                </group>
+                                                <group>
+                                                    <field name="oxygen"/>
+                                                    <field name="infection"/>
+                                                </group>
+                                            </group>
+                                        </page>
+                                        <page string="Right Eye">
+                                            <div>
+                                                <p>Exam Findings</p>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="right_zone"/>
+                                                    <field name="right_stage"/>
+                                                </group>
+                                                <group>
+                                                    <field name="right_pre_plus"/>
+                                                    <field name="right_plus"/>
+                                                    <field name="right_arop"/>
+                                                </group>
+                                            </group>
+                                        </page>
+                                        <page string="Left Eye">
+                                            <div>
+                                                <p>Exam Findings</p>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="left_zone"/>
+                                                    <field name="left_stage"/>
+                                                </group>
+                                                <group>
+                                                    <field name="left_pre_plus"/>
+                                                    <field name="left_plus"/>
+                                                    <field name="left_arop"/>
+                                                </group>
+                                            </group>
+                                        </page>
+                                        <page string="Photos">
+                                            <group>
+                                                <field name="attachment"  widget="many2many_binary"/>
+                                               
+                                            </group>
+                                        </page>
+                                        <page string="Comments">
+                                            <group>
+                                                <field name="Comments"/>
+                                            </group>
+                                        </page>
+                                        <page string="Plan">
+                                            <group>
+                                                <field name="Plan"/>
+                                                <field name="review_date" attrs="{'invisible': [('Plan', '!=', 'need_review')]}"/>
+                                            </group>
+                                        </page>
+
+
+                                    </notebook>
+                                    
+                                </form>
+                            </field> 
+                            
+                            
+                        </page> -->
                         <page name="family" string="Family and Insurance"
                               groups="base_hospital_management.base_hospital_management_group_doctor,base_hospital_management.base_hospital_management_group_lab_assistant,base_hospital_management.base_hospital_management_group_pharmacist,base_hospital_management.base_hospital_management_group_nurse,base_hospital_management.base_hospital_management_group_receptionist,base_hospital_management.base_hospital_management_group_manager">
                             <group>

@@ -7,7 +7,7 @@
               name="Bulamu Home Doctors"/>
     <!--Appointment menu-->
     <menuitem id="menu_hospital_appointment" name="Appointments" groups="base_hospital_management.base_hospital_management_group_manager"
-              parent="hospital_menu_root" action="appointments_action"
+              parent="hospital_menu_root" 
               sequence="23"/>
     <!--    Patient menu-->
     <!--<menuitem id="appointment_menu_patient" name="Patient"
@@ -18,9 +18,7 @@
               parent="hospital_menu_root"
               sequence="3"/>
     <!--    Infrastructure menu-->
-    <menuitem id="hospital_menu_infrastructure" name="Infrastructure"
-              groups="base_hospital_management.base_hospital_management_group_manager"
-              parent="hospital_menu_configuration" sequence="10"/>
+    
     <menuitem name="Report" id="hospital_report" parent="hospital_menu_root"
               sequence="8"/>
     <!--    Configuration menu-->
@@ -73,7 +71,5 @@
     <menuitem id="hospital_expense" name="Expenses"
               parent="hospital_menu_root"
               sequence="9" action="hr_expense.hr_expense_actions_my_all"/>
-    <menuitem id="hospital_inventory" name="Over The Counter"
-              parent="product_template_menu_medicine"
-              sequence="3" action="point_of_sale.action_pos_config_kanban"/>
+    
 </odoo>

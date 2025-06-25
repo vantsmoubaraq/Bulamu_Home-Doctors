@@ -38,6 +38,7 @@ class ResPartner(models.Model):
     date_of_birth = fields.Date(string='Date of Birth',
                                 help='Date of birth of the patient')
     age = fields.Integer(string='Age in Years', compute='_compute_age', store=True)
+    weeks = fields.Float(string='Age in Weeks', compute='_compute_weeks', store=True)
     gender = fields.Selection(selection=[
         ('male', 'Male'), ('female', 'Female')
     ], string='Gender', help='Gender of the patient')
@@ -89,6 +90,7 @@ class ResPartner(models.Model):
                                        'res_partner_id',
                                        string='Prescription',
                                        help='Prescription for patient')
+    rop = fields.One2many("rop.evaluation", 'patient_id', string="ROP Evaluation")
     economic_level = fields.Selection(selection=[
         ('low', 'Lower Class'), ('middle', 'Middle Class'),
         ('upper', 'Upper Class')], string="Socioeconomic",
@@ -304,6 +306,8 @@ class ResPartner(models.Model):
                             help='True if you have car child safety')
     home = fields.Boolean(string='Home Safety', help='True for home safety')
     occupation = fields.Char(string='Occupation', help='Your occupation')
+    gestation_age = fields.Integer("Birth gestation age in weeks")
+    birth_weight = fields.Integer("Birth Weight(Grams)")
 
     @api.model
     def create(self, vals):
@@ -367,6 +371,18 @@ class ResPartner(models.Model):
                 partner.age = age
             else:
                 partner.age = 0
+    
+    @api.depends('date_of_birth')
+    def _compute_weeks(self):
+        today = datetime.today().date()
+        for partner in self:
+            if partner.date_of_birth:
+                dob = fields.Date.from_string(partner.date_of_birth)
+                age = relativedelta(today, dob)
+                age_in_weeks = (age.years * 52) + (age.months * 4) + (age.days // 7)
+                partner.weeks = age_in_weeks
+            else:
+                partner.weeks = 0
 
     def fetch_view_id(self):
         """Returns the view id of patient"""

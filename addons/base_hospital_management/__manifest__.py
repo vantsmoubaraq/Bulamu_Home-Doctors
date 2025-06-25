@@ -82,6 +82,8 @@
         "report/patient_lab_test_template.xml",
         "report/travel_report.xml",
         "report/travel_template.xml",
+        "report/rop_template.xml",
+        "report/rop_report.xml",
         "views/lab_test_line_views.xml",
         "views/prescription_orders.xml",
         "views/register.xml",

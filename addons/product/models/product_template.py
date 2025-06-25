@@ -144,6 +144,9 @@ class ProductTemplate(models.Model):
     ], default='0', string="Favorite")
 
     product_tag_ids = fields.Many2many('product.tag', 'product_tag_product_template_rel', string='Product Tags')
+    expiry_date = fields.Date(string="Expiry Date", default=fields.Date.today)
+
+    
 
     def _compute_item_count(self):
         for template in self:
