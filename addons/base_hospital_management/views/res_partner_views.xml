@@ -142,6 +142,66 @@
                         <page string="Clinical Notes">
                             <field name="notes"/>
                         </page>
+                        <page name="Evaluations"
+                              string="Evaluations">
+                              <field name="evaluation">
+                                <tree decoration-success="True">
+                                    <field name="evaluation_no"/>
+                                    <field name="patient_id"/>
+                                    <field name="date"/>                       
+                                </tree>
+                                <form>
+                                    <sheet>
+                                    <group>
+                                        <group>
+                                            <field name="evaluation_no"/>
+                                        </group>
+                                        
+                                            <field name="attachment"  widget="many2many_binary" />
+                                        
+                                    </group>
+
+                                    <notebook>
+                                        <page name="Clinical Notes">
+                                            
+                                                <field name = "clinical_notes"/>
+                                           
+                                        </page>
+                                        
+                                        <page name = "Treatment Plan">
+                                            <field name = "treatment_plan"/>
+                                        </page>
+                                        <page name="Vital Signs">
+                                            <group>
+                                                <group>
+                                                <field name = "bp"/>
+                                                <field name = "heart_rate"/>
+                                                </group>
+                                                <group>
+                                                <field name = "temperature"/>
+                                                <field name = "respiration_rate"/>
+                                                </group>
+                                            </group>                                          
+                                        </page>
+                                        <page name = "Orthopedics">
+                                            <group>
+                                            <field name = "spine_conditions"/>
+                                            <field name = "injury_type"/>
+                                            <field name = "affected_limb"/>
+                                            <field name = "mechanism_of_injury"/>
+                                            <field name = "range_of_motion"/>
+                                            <field name = "neurovascular_status"/>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </sheet>
+                                    
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Clinical Notes">
+                            <field name="notes"/>
+                        </page>
                         <!-- <page string="ROP Evaluations">
                             <field name="rop">
                                 <tree>

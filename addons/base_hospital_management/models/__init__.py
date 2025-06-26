@@ -62,3 +62,4 @@ from . import register
 from . import stock_picking
 from . import appointments
 from . import rop
+from . import evaluations

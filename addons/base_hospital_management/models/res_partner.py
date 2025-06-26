@@ -308,6 +308,7 @@ class ResPartner(models.Model):
     occupation = fields.Char(string='Occupation', help='Your occupation')
     gestation_age = fields.Integer("Birth gestation age in weeks")
     birth_weight = fields.Integer("Birth Weight(Grams)")
+    evaluation = fields.One2many("evaluation.clinicalnotes", 'patient_id', string="Evaluation")
 
     @api.model
     def create(self, vals):
