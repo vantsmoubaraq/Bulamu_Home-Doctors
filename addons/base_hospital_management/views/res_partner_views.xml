@@ -116,6 +116,9 @@
                                    options="{'horizontal': true}"/>
                             <!--<field name="gestation_age"/>
                             <field name="birth_weight"/>-->
+                            <field name="has_legacy_notes" invisible="1"/>
+
+                            
                         </group>
                     </group>
                     <notebook>
@@ -138,9 +141,6 @@
                                 <field name="occupation"/>
                             </group>
                             </group>
-                        </page>
-                        <page string="Clinical Notes">
-                            <field name="notes"/>
                         </page>
                         <page name="Evaluations"
                               string="Evaluations">
@@ -183,7 +183,7 @@
                                                 </group>
                                             </group>                                          
                                         </page>
-                                        <page name = "Orthopedics">
+                                        <!-- <page name = "Orthopedics">
                                             <group>
                                             <field name = "spine_conditions"/>
                                             <field name = "injury_type"/>
@@ -191,16 +191,13 @@
                                             <field name = "mechanism_of_injury"/>
                                             <field name = "range_of_motion"/>
                                             <field name = "neurovascular_status"/>
-                                            </group>
-                                        </page>
+                                            </group> 
+                                        </page> -->
                                     </notebook>
                                 </sheet>
                                     
                                 </form>
                             </field>
-                        </page>
-                        <page string="Clinical Notes">
-                            <field name="notes"/>
                         </page>
                         <!-- <page string="ROP Evaluations">
                             <field name="rop">
@@ -511,6 +508,9 @@
                                     <field name="abortions"/>
                                 </group>
                             </group>
+                        </page>
+                        <page string="Legacy Notes" attrs="{'invisible': [('has_legacy_notes', '=', False)]}">
+                            <field name="notes"/>
                         </page>
                     </notebook>
                 </sheet>

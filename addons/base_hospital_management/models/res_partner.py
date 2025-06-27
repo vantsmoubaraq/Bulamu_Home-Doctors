@@ -309,6 +309,8 @@ class ResPartner(models.Model):
     gestation_age = fields.Integer("Birth gestation age in weeks")
     birth_weight = fields.Integer("Birth Weight(Grams)")
     evaluation = fields.One2many("evaluation.clinicalnotes", 'patient_id', string="Evaluation")
+    has_legacy_notes = fields.Boolean("Has Legacy Notes", compute="_compute_has_legacy_notes", store=True)
+    
 
     @api.model
     def create(self, vals):
@@ -592,6 +594,11 @@ class ResPartner(models.Model):
         """Method for returning patient data"""
         return self.sudo().search_read(
             [('patient_seq', 'not in', ['New', 'Employee', 'User'])])
+    
+    @api.depends('notes')
+    def _compute_has_legacy_notes(self):
+        for rec in self:
+            rec.has_legacy_notes = bool(rec.notes and rec.notes.strip())
 
 def open_account_move_view(self):
     return {
